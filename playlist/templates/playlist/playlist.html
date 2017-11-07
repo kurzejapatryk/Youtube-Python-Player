@@ -1,0 +1,62 @@
+
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+
+        </script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="http://pop.goadservices.com/static/css/style.css">
+        <title>GO PLAYER</title>
+    </head>
+    <body>
+        <header>
+            <h1>GO PLAYER</h1>
+        </header>
+
+        <main>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" name="url" id="url">
+                    <label class="mdl-textfield__label" for="url">Url z Youtube</label>
+                 </div>
+                <button id="addsong" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                    <i class="material-icons">add</i> Dodaj
+                </button>
+
+            <div id="table"></div>
+
+                <hr/>
+                <small>Patryk Kurzeja | p.kurzeja@go.pl | 2017</small>
+        </main>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+              integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+              crossorigin="anonymous"></script>
+
+        <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+
+        <script>
+        function reloadTable(){
+            var table = $('#table')
+            $.ajax({url: '/playlist/table'}).done(function(data){
+                table.html(data);
+            });
+        }
+
+        $('#addsong').click(function(){
+            var yt_url = $('#url')
+            $.ajax({
+                url: '/playlist/addquery',
+                data: {url: yt_url}
+            }).done(function(data){
+                reloadTable();
+            });
+        });
+
+        reloadTable();
+        </script>
+    </body>
+</html>

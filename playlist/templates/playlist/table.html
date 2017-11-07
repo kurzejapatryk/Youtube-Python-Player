@@ -1,0 +1,28 @@
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <thead width="100%">
+                        <tr>
+                            <th>#</th>
+                            <th>Nazwa</th>
+                            <th>O / C</th>
+                            <th>Akcja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for video in videos %}
+                        <tr>
+                            <td>{{ video.id }}</td>
+                            <td>{{ video.title }}</td>
+                            <td>{% if video.new > 0 %}NOWY{% else %}{{ video.played }}{% endif %} / {{ video.count }}</td>
+                            <td>
+                                <a href="/playlist/del/{{ video.id }}">Usuń</a>
+                                <a href="/playlist/reset/{{ video.id }}">Odtwórz</a>
+                                {% if video.stoped %}
+                                    <a href="/playlist/unstop/{{ video.id }}">Odblokuj</a>
+                                {% else %}
+                                    <a href="/playlist/stop/{{ video.id }}">Zablokuj</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
