@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 import random
 
@@ -50,10 +51,12 @@ def addquery(request):
         s = Sound(url=request.POST.get('url'), count = minCount, new = 1)
         s.save()
         s.getId()
-        s.getName()
-        return redirect(index)
+	s.save()
+	s.getName()
+	s.save()
+        return JsonResponse({'added':s.title})
     else:
-        return render(request, 'playlist/addform.html', {'error': 1})
+        return JsonResponse({'error': 'Brak pola URL w tablicy POST'})
 
 def add(request):
     return render(request, 'playlist/addform.html')

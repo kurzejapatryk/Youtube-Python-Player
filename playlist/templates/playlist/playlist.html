@@ -31,6 +31,11 @@
                 <hr/>
                 <small>Patryk Kurzeja | p.kurzeja@go.pl | 2017</small>
         </main>
+	
+	<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+  		<div class="mdl-snackbar__text"></div>
+  		<button class="mdl-snackbar__action" type="button"></button>
+	</div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
               integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -47,12 +52,22 @@
         }
 
         $('#addsong').click(function(){
-            var yt_url = $('#url')
+            var yt_url = $('#url').val();
+	    var snackbarContainer = document.querySelector('#demo-toast-example');
+            var showToastButton = document.querySelector('#demo-show-toast');
             $.ajax({
                 url: '/playlist/addquery',
+		dataType: 'json',
+		method: 'POST',
                 data: {url: yt_url}
             }).done(function(data){
                 reloadTable();
+		if(data.added){
+			var datasnack = {message: 'Dodano do listy: ' + data.added};
+		}else{
+			var datasnack = {message: 'ARG Błąd... ' + data.error};
+		}
+    		snackbarContainer.MaterialSnackbar.showSnackbar(datasnack);
             });
         });
 
