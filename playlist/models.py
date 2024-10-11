@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import lxml, urllib, urlparse
+import lxml, urllib
+from urllib.parse import urlparse
 from lxml import etree
 
 from django.db import models

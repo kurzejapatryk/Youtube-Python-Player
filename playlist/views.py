@@ -47,13 +47,13 @@ def play(request):
 
 def addquery(request):
     if(request.POST.get('url')):
-        minCount = __getMinCount();
+        minCount = __getMinCount()
         s = Sound(url=request.POST.get('url'), count = minCount, new = 1)
         s.save()
         s.getId()
-	s.save()
-	s.getName()
-	s.save()
+        s.save()
+        s.getName()
+        s.save()
         return JsonResponse({'added':s.title})
     else:
         return JsonResponse({'error': 'Brak pola URL w tablicy POST'})
