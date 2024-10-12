@@ -7,9 +7,9 @@ from lxml import etree
 from django.db import models
 
 class Sound(models.Model):
-    url = models.URLField('URL', unique="True")
-    yt_id = models.CharField('youtube ID', max_length=50, unique="True")
-    title = models.CharField('Tytuł', max_length=150, unique="True")
+    url = models.URLField('URL', unique=True)
+    yt_id = models.CharField('youtube ID', max_length=50, unique=True)
+    title = models.CharField('Tytuł', max_length=150)
     count = models.IntegerField('Delay', default='0');
     played = models.IntegerField('Odtworzenie', default='0')
     new = models.IntegerField('Czy nowy', default='1')
@@ -24,16 +24,16 @@ class Sound(models.Model):
 
     def getName(self):
         """"Pobiera i zwraca nazwe filmu"""
-        youtube = etree.HTML(urllib.urlopen(self.url).read())
-        video_title = youtube.xpath("//span[@id='eow-title']/@title")
+        youtube = etree.HTML(urllib.request.urlopen(self.url).read())
+        video_title = youtube.xpath('//meta[@name="title"]/@content')
         self.title = video_title[0]
         self.save()
         return self.title
 
     def getId(self):
         """Zwraca ID filmu"""
-        url_data = urlparse.urlparse(self.url)
-        query = urlparse.parse_qs(url_data.query)
+        url_data = urlparse(self.url)
+        query = urllib.parse.parse_qs(url_data.query)
         video = query["v"][0]
         self.yt_id = video
         self.save()
